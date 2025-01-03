@@ -22,42 +22,61 @@ Developed by: Yokesh I
 RegisterNumber:  24013623
 */
 ```
+
+import pandas as pd
+
 from sklearn.datasets import load_iris
+
 from sklearn.linear_model import SGDClassifier
+
 from sklearn.model_selection import train_test_split
+
 from sklearn.metrics import accuracy_score, confusion_matrix
+
 import matplotlib.pyplot as plt
+
 import seaborn as sns
 
-#load the dataset
 iris = load_iris()
 
-#create pandas dataframe
-df=pd.DataFrame(data=iris.data, columns=iris.feature_names)
-df['target']=iris.target
+
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+df['target'] = iris.target
 
 print(df.head())
 
-#split the data into features x and target y
-x=df.drop('target',axis=1)
-y= df['target']
+X = df.drop('target', axis=1)
 
-#split the data into training and testing set
-x_train, x_test,y_train,y_test = train_test_split(x,y, test_size = 0.2, random_state = 42)
+y = df['target']
 
-sgd_clf = SGDClassifier(max_iter = 1000, tol= 1e-3)#create sgd classifier with default parameter
-sgd_clf.fit(x_train, y_train)#train the classifier on the training data
+Load the Iris dataset
 
-y_pred = sgd_clf.predict(x_test)#make predictions on the testing data
+Create a Pandas DataFrame
 
-accuracy = accuracy_score(y_test, y_pred)# evaluate the classifier's accuracy
-print(f"Accuracy:{accuracy:.3f}")
+Display the first few rows of the dataset
 
-#calculate the confusion matrix
-cf=confusion_matrix(y_test, y_pred)
-print("Confusion Matrix")
-print(cf)
+Split the data into features (X) and target (y)
 
+Split the data into training and testing sets
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+sgd_clf = SGDClassifier(max_iter=1000, tol=1e-3)
+
+sgd_clf.fit(X_train, y_train)
+
+y_pred = sgd_clf.predict(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+
+print(f"Accuracy: {accuracy:.3f}")
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("Confusion Matrix:")
+
+print(cm)
 ## Output:
 ![prediction of iris species using SGD Classifier](sam.png)
 ![4321](https://github.com/user-attachments/assets/5351a282-1e57-4e87-8c7f-1fa1a1f34372)
